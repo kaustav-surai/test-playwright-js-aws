@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16 # Or your preferred Node.js version
+    commands:
+      - npm install -g playwright # Install Playwright globally (or locally if preferred)
+      - npx playwright install # Install the browsers Playwright needs
+      - npm install # Install project dependencies if any
+  build:
+    commands:
+      - npx playwright test # Run the Playwright tests
+  post_build:
+    commands:
+      - aws s3 cp playwright-report/ s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/ --recursive --acl public-read # Upload the entire report directory. The `--recursive` flag is crucial.
+      - aws s3 cp test-results.txt s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/results.txt --acl public-read # If you have other test results, upload them too.
