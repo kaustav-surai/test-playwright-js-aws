@@ -7,7 +7,7 @@ phases:
     commands:
       - npm install # Install project dependencies if any. Do this *before* installing Playwright.
       - npm install -g playwright # Install Playwright globally (or locally if preferred)
-      - npx playwright install # Install the browsers Playwright needs. This is the CRUCIAL step.
+      - npx playwright install --with-deps  # Install the browsers Playwright needs. This is the CRUCIAL step.
   build:
     commands:
       - npx playwright test # Run the Playwright tests
