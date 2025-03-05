@@ -3,14 +3,18 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 16 # Or your preferred Node.js version
+      nodejs: 16
     commands:
-      - npm install # Install project dependencies if any. Do this *before* installing Playwright.
-      - npm install -g playwright # Install Playwright globally (or locally if preferred)
-      - npx playwright install --with-deps  # Install the browsers Playwright needs. This is the CRUCIAL step.
+      - npm install # Install project dependencies FIRST
+      - mkdir -p /tmp/playwright-cache
+      - export PLAYWRIGHT_CACHE_PATH=/tmp/playwright-cache
+      - npm install -g playwright
+      - npx playwright install --with-deps
+      - playwright --version
+      - ls -al $PLAYWRIGHT_CACHE_PATH/chromium*
   build:
     commands:
-      - npx playwright test # Run the Playwright tests
+      - npx playwright test
   post_build:
     commands:
       - aws s3 cp playwright-report/ s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/ --recursive --acl public-read
