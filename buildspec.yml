@@ -3,18 +3,11 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 16
+      nodejs: 18
     commands:
-     - npm install # Project dependencies
-     - mkdir -p /tmp/playwright-cache
-     - export PLAYWRIGHT_CACHE_PATH=/tmp/playwright-cache
-     - npm install -g playwright
-     - npx playwright install --with-deps
-     - playwright --version
-     - ls -al $PLAYWRIGHT_CACHE_PATH # List the entire cache directory
-     - ls -al $PLAYWRIGHT_CACHE_PATH/chromium* # Specifically list Chromium
-     - if [ -d "$PLAYWRIGHT_CACHE_PATH/chromium_headless_shell-*" ]; then echo "Chromium directory EXISTS"; else echo "Chromium directory DOES NOT EXIST"; fi  # Explicit check
-
+      - echo "Installing dependencies and Playwright..."
+      - npm install
+      - npx playwright install chromium
   build:
     commands:
       - npx playwright test
