@@ -1,5 +1,19 @@
 version: 0.2
+
 phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Installing dependencies and Playwright..."
+      - npm install
+      - npx playwright install chromium
   build:
     commands:
-      - echo "Hello from buildspec.yml!"
+      - npx playwright test
+      - allure generate -c allure-results -o allure-report
+  post_build:
+    commands:
+      - aws s3 cp ./allure-report s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/ --recursive
+      - export ALLURE_REPORT_URL= s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/
+      - node notifySlack.js --name playwright-test --success $CODEBUILD_BUILD_SUCCEDING --report $ALLURE_REPORT_URL --buildId $CODEBUILD_BUILD_ID --startTime CODEBUILD_START_TIME
