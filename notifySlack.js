@@ -18,7 +18,7 @@ async function notifySlack() {
 
     const [projectName, id] = buildId.split(':');
 
-    const parsedStartTime = new Date(startTime).toLocaleDateString('en-GB',{
+    const parsedStartTime = new Date(startTime).toLocaleTimeString('en-GB',{
         timeZone:'Europe/London',
     });
 
