@@ -1,11 +1,11 @@
 import { argv, version } from 'yargs';
-import { SNS } from 'aws-sdk';
+import AWS from 'aws-sdk';
 const summary = require('allure-report/widgets/summary.json');
 
 async function notifySlack() {
     const { name, success, report, buildId, startTime } = argv;
 
-    const sns = new SNS({
+    const sns = new AWS.SNS({
         region: 'us-east-2',
     });
 
