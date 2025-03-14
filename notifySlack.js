@@ -29,7 +29,7 @@ async function notifySlack() {
     ].join(' | ');
 
     try {
-        const successBool = success.toLowerCase() === 'true' || success === '1'; // More flexible success check
+        const successBool = success.toLowerCase() === 'true' || success === '1';
 
         await sns.publish({
             Message: JSON.stringify({
