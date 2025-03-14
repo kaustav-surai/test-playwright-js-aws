@@ -17,6 +17,7 @@ async function notifySlack() {
     });
 
     const [projectName, id] = buildId.split(':');
+    console.log('startTime:', startTime);
 
     const parsedStartTime = new Date(startTime).toLocaleTimeString('en-GB',{
         timeZone:'Europe/London',
