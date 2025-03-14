@@ -17,18 +17,14 @@ async function notifySlack() {
     });
 
     const [projectName, id] = buildId.split(':');
+    
+    startTime = startTime.substring(0,10);
     console.log('startTime:', startTime);
+    const parsedStartTime = new Date(startTime).toLocaleTimeString('en-GB',{
+        timeZone:'Europe/London',
+    });
 
-    if (typeof startTime === 'number') {
-        const parsedStartTime = new Date(startTime).toLocaleTimeString('en-GB', {
-          timeZone: 'Europe/London',
-        });
-        console.log(parsedStartTime);
-      } else {
-        console.log('Invalid startTime: not a number');
-      }
-
-
+    
 
     const description = [
         `<${report}|Report>`,
