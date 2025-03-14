@@ -15,10 +15,8 @@ async function notifySlack() {
         timeZone: 'Europe/London',
     });
 
-    const { failed, total } = summary.statistic;
-
     const description = [
-        `<${report}|Allure Report>`,
+        `<${report}|Report>`,
         `<https://us-east-2.console.aws.amazon.com/codesuite/codebuild/390403859997/projects/${projectName}/build/${projectName}%3A${id}?region=us-east-2|CodeBuild>`,
         `Start time: ${parsedStartTime}`
     ].join(' | ');
@@ -32,7 +30,7 @@ async function notifySlack() {
             content: {
                 title: `QA Run: \`${name}\` ${success.toString() === '1'
                         ? 'was successful ✅'
-                        : `failed (${failed}/${total}) ❌`
+                        : `failed ❌`
                     }`,
                 description,
             },

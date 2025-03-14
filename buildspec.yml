@@ -13,7 +13,6 @@ phases:
       - npx playwright test
   post_build:
     commands:
-      - npx allure generate -c allure-results -o allure-report
-      - aws s3 cp ./allure-report s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/ --recursive
-      - export ALLURE_REPORT_URL= s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/
-      - node notifySlack.js --name playwright-test-reg --success $CODEBUILD_BUILD_SUCCEDING --report $ALLURE_REPORT_URL --buildId $CODEBUILD_BUILD_ID --startTime CODEBUILD_START_TIME
+      - aws s3 cp playwright-report/ s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/ --recursive 
+      - export REPORT_URL= "s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/"
+      - node notifySlack.js --name playwright-test-reg --success $CODEBUILD_BUILD_SUCCEDING --report $REPORT_URL --buildId $CODEBUILD_BUILD_ID --startTime CODEBUILD_START_TIME
