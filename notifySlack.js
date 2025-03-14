@@ -1,4 +1,4 @@
-import { argv, version } from 'yargs';
+const { argv } = require('yargs');
 import AWS from 'aws-sdk';
 const summary = require('allure-report/widgets/summary.json');
 
