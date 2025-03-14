@@ -17,19 +17,12 @@ async function notifySlack() {
     });
 
     const [projectName, id] = buildId.split(':');
-    
-    const timeStart = startTime.substring(0,10);
-    console.log('startTime:', timeStart);
-    const parsedStartTime = new Date(timeStart).toLocaleTimeString('en-GB',{
-        timeZone:'Europe/London',
-    });
 
     
 
     const description = [
         `<${report}|Report>`,
-        `<https://us-east-2.console.aws.amazon.com/codesuite/codebuild/390403859997/projects/${projectName}/build/${projectName}%3A${id}?region=${region}|CodeBuild>`,
-        `Start time: ${parsedStartTime}`
+        `<https://us-east-2.console.aws.amazon.com/codesuite/codebuild/390403859997/projects/${projectName}/build/${projectName}%3A${id}?region=${region}|CodeBuild>`
     ].join(' | ');
 
     try {
