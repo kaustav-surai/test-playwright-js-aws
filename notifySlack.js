@@ -21,8 +21,6 @@ async function notifySlack() {
         `Start time: ${parsedStartTime}`
     ].join(' | ');
 
-    console.info('Allure reports', report);
-
     sns.publish({
         Message: JSON.stringify({
             version: '1.0',

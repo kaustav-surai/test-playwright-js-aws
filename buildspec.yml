@@ -14,5 +14,5 @@ phases:
   post_build:
     commands:
       - aws s3 cp playwright-report/ s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/ --recursive 
-      - export REPORT_URL= "s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/"
+      - export REPORT_URL="s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/"
       - node notifySlack.js --name playwright-test-reg --success $CODEBUILD_BUILD_SUCCEDING --report $REPORT_URL --buildId $CODEBUILD_BUILD_ID --startTime CODEBUILD_START_TIME
