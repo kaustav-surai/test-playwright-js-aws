@@ -8,12 +8,13 @@ phases:
       - echo "Installing dependencies and Playwright..."
       - npm install
       - npx playwright install chromium
+      - allure --version
   build:
     commands:
       - npx playwright test
-      - allure generate -c allure-results -o allure-report
   post_build:
     commands:
+      - allure generate -c allure-results -o allure-report
       - aws s3 cp ./allure-report s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/ --recursive
       - export ALLURE_REPORT_URL= s3://regression-test-results-ks/$CODEBUILD_BUILD_ID/playwright-report/
       - node notifySlack.js --name playwright-test --success $CODEBUILD_BUILD_SUCCEDING --report $ALLURE_REPORT_URL --buildId $CODEBUILD_BUILD_ID --startTime CODEBUILD_START_TIME
